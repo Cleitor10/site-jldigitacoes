@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JL Digitações - Serviços de Design e Formatações</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #0033cc; /* Azul Escuro */
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        header h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 400;
+        }
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        form {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            font-weight: 600;
+            margin-top: 1rem;
+            display: block;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button {
+            background-color: #ff0000; /* Vermelho */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #cc0000; /* Vermelho Escuro */
+        }
+        .button:active {
+            transform: scale(0.98);
+        }
+        footer {
+            background-color: #0033cc; /* Azul Escuro */
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.875rem;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            font-weight: 500;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .social-links {
+            margin: 1rem 0;
+        }
+        #about-us-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        #about-us-content {
+            background: #fff;
+            border-radius: 8px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        #about-us-content h2 {
+            margin-top: 0;
+            color: #0033cc; /* Azul Escuro */
+            font-size: 1.75rem;
+        }
+        #about-us-content button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #0033cc; /* Azul Escuro */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #about-us-content button:hover {
+            background: #002a8c; /* Azul mais Escuro */
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>JL Digitações</h1>
+        <h2>Serviços de Design e Formatações</h2>
+    </header>
+    <main>
+        <form id="service-form">
+            <p>Informe seus dados!</p>
+            <label for="clientName">Nome:</label>
+            <input type="text" id="clientName" required>
+
+            <label for="clientCPF">CPF:</label>
+            <input type="text" id="clientCPF" required>
+
+            <label for="clientEmail">E-mail:</label>
+            <input type="email" id="clientEmail" required>
+
+            <label for="clientPhone">Número de Celular:</label>
+            <input type="tel" id="clientPhone" required>
+
+            <label for="service">Escolha um Serviço:</label>
+            <select id="service" onchange="updateServiceDetails()">
+                <option value="">Selecione...</option>
+                <option value="academic">Formatar Trabalhos Acadêmicos</option>
+                <option value="businessCard">Cartão de Visita</option>
+                <option value="logo">Logomarca</option>
+                <option value="digitalArt">Arte Digital</option>
+                <option value="desktopMaintenance">Formatação/Manutenção de Computadores (Desktop)</option>
+                <option value="laptopMaintenance">Formatação/Manutenção de Notebook</option>
+                <option value="programInstallation">Instalação de Programas</option>
+                <option value="officePackage">Instalação Pacote Office</option>
+            </select>
+
+            <div id="service-details" class="hidden">
+                <div id="service-details-content"></div>
+                <div id="additional-options"></div>
+            </div>
+
+            <div id="payment-info" class="hidden">
+                <div id="payment-info-content"></div>
+            </div>
+
+            <div id="pix-info" class="hidden">
+                <p>Informações para pagamento via PIX serão enviadas por WhatsApp.</p>
+            </div>
+
+            <button type="button" id="finalizeButton" class="button hidden" onclick="finalizeOrder()">Finalizar Pedido</button>
+            <button type="button" id="resetButton" class="button hidden" onclick="resetForm()">Limpar Dados</button>
+            <button type="button" id="newOrderButton" class="button hidden" onclick="newOrder()">Novo Pedido</button>
+        </form>
+    </main>
+    <footer>
+        <p>© 2024 JL Digitações | Todos os direitos reservados.</p>
+        <div class="social-links">
+            <a href="https://www.instagram.com/cleitor_jldigitacoes" target="_blank">Instagram</a> |
+            <a href="https://www.facebook.com/cleitor.medeiros" target="_blank">Facebook</a> |
+            <a href="https://t.me/Cleitor" target="_blank">Telegram</a>
+        </div>
+        <button class="button" onclick="showAboutUs()">Sobre Nós</button>
+    </footer>
+
+    <!-- Modal para "Sobre Nós" -->
+    <div id="about-us-modal">
+        <div id="about-us-content">
+            <button onclick="closeAboutUs()">Fechar</button>
+            <h2>Sobre Nós</h2>
+            <p>Bem-vindo à JL Digitações! Somos especializados em fornecer serviços de design e formatação de alta qualidade. Oferecemos uma ampla gama de serviços para atender às suas necessidades específicas, incluindo:</p>
+            <ul>
+                <li><strong>Formatação de Trabalhos Acadêmicos:</strong> Com opções de formatação simples, completa ou com revisão, garantimos que seu trabalho esteja pronto para entrega de acordo com suas exigências.</li>
+                <li><strong>Design de Cartão de Visita:</strong> Criação personalizada para destacar sua imagem profissional.</li>
+                <li><strong>Logomarcas:</strong> Desenvolvimento de logotipos exclusivos que representam a identidade da sua empresa.</li>
+                <li><strong>Arte Digital:</strong> Criação de arte digital personalizada para diversos fins.</li>
+                <li><strong>Manutenção e Formatação de Computadores:</strong> Serviços completos de formatação e manutenção para desktops e notebooks, incluindo diagnósticos e reparos.</li>
+                <li><strong>Instalação de Programas e Pacote Office:</strong> Instalação e configuração de softwares e do pacote Microsoft Office.</li>
+            </ul>
+            <p>Entre em contato para mais informações ou para solicitar um orçamento personalizado.</p>
+        </div>
+    </div>
+
+    <script>
+        // Preços e opções dos serviços
+        const servicePrices = {
+            academic: {
+                'Padrão (até 72h)': 1.50,
+                'Normal (até 48h)': 2.00,
+                'Diário (até 24h)': 2.50,
+                'Rápido (até 12h)': 3.00,
+                'Muito Rápido (até 6h)': 3.50,
+                'Expresso (até 2h)': 4.50
+            },
+            businessCard: 60,
+            logo: 150,
+            digitalArt: 100,
+            desktopMaintenance: {
+                'Sem Backup': 50,
+                'Com Backup': 70
+            },
+            laptopMaintenance: {
+                'Sem Backup': 60,
+                'Com Backup': 80
+            },
+            programInstallation: 40,
+            officePackage: 60
+        };
+
+        function updateServiceDetails() {
+            const service = document.getElementById('service').value;
+            const detailsContent = document.getElementById('service-details-content');
+            const additionalOptions = document.getElementById('additional-options');
+            const paymentInfo = document.getElementById('payment-info');
+            const pixInfo = document.getElementById('pix-info');
+            const finalizeButton = document.getElementById('finalizeButton');
+            const resetButton = document.getElementById('resetButton');
+            const newOrderButton = document.getElementById('newOrderButton');
+
+            if (service) {
+                if (service === 'academic') {
+                    detailsContent.innerHTML = `<p>Escolha o prazo e informe o número de páginas:</p>`;
+                    additionalOptions.innerHTML = `
+                        <label for="academic-time">Prazo:</label>
+                        <select id="academic-time">
+                            <option value="Padrão (até 72h)">Padrão (até 72h) - R$ 1,50 por página</option>
+                            <option value="Normal (até 48h)">Normal (até 48h) - R$ 2,00 por página</option>
+                            <option value="Diário (até 24h)">Diário (até 24h) - R$ 2,50 por página</option>
+                            <option value="Rápido (até 12h)">Rápido (até 12h) - R$ 3,00 por página</option>
+                            <option value="Muito Rápido (até 6h)">Muito Rápido (até 6h) - R$ 3,50 por página</option>
+                            <option value="Expresso (até 2h)">Expresso (até 2h) - R$ 4,50 por página</option>
+                        </select>
+                        <label for="academic-pages">Número de páginas:</label>
+                        <input type="number" id="academic-pages" min="1">
+                    `;
+                } else if (service === 'businessCard') {
+                    detailsContent.innerHTML = `<p>Informe a quantidade desejada. A quantidade mínima é 50 unidades.</p>`;
+                    additionalOptions.innerHTML = `
+                        <label for="card-quantity">Quantidade:</label>
+                        <input type="number" id="card-quantity" min="50">
+                    `;
+                } else if (service === 'desktopMaintenance' || service === 'laptopMaintenance') {
+                    const isDesktop = service === 'desktopMaintenance';
+                    detailsContent.innerHTML = `
+                        <p>Escolha a opção desejada:</p>
+                        <select id="${service}-option">
+                            <option value="Sem Backup">${isDesktop ? 'Sem Backup' : 'Sem Backup'} - R$ ${isDesktop ? 50 : 60}</option>
+                            <option value="Com Backup">${isDesktop ? 'Com Backup' : 'Com Backup'} - R$ ${isDesktop ? 70 : 80}</option>
+                        </select>
+                    `;
+                } else {
+                    detailsContent.innerHTML = `<p>O serviço escolhido é: ${service.replace(/([A-Z])/g, ' $1').trim()}</p>`;
+                    detailsContent.innerHTML += `<p>O valor do serviço é R$ ${servicePrices[service].toFixed(2)}</p>`;
+                    additionalOptions.innerHTML = '';
+                }
+
+                document.getElementById('service-details').classList.remove('hidden');
+                paymentInfo.classList.remove('hidden');
+                pixInfo.classList.remove('hidden');
+                finalizeButton.classList.remove('hidden');
+                resetButton.classList.remove('hidden');
+                newOrderButton.classList.remove('hidden');
+            } else {
+                detailsContent.innerHTML = '';
+                additionalOptions.innerHTML = '';
+                document.getElementById('service-details').classList.add('hidden');
+                paymentInfo.classList.add('hidden');
+                pixInfo.classList.add('hidden');
+                finalizeButton.classList.add('hidden');
+                resetButton.classList.add('hidden');
+                newOrderButton.classList.add('hidden');
+            }
+        }
+
+        function finalizeOrder() {
+            const clientName = document.getElementById('clientName').value;
+            const clientCPF = document.getElementById('clientCPF').value;
+            const clientEmail = document.getElementById('clientEmail').value;
+            const clientPhone = document.getElementById('clientPhone').value;
+            const service = document.getElementById('service').value;
+            const serviceDetails = document.getElementById('additional-options');
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('pt-BR');
+
+            let price, serviceName, messageForOwner, messageForClient;
+
+            if (service === 'academic') {
+                const time = document.getElementById('academic-time').value;
+                const pages = parseInt(document.getElementById('academic-pages').value);
+                price = servicePrices.academic[time] * pages;
+                serviceName = `Formatar Trabalhos Acadêmicos (${time}, ${pages} páginas)`;
+            } else if (service === 'businessCard') {
+                const quantity = parseInt(document.getElementById('card-quantity').value);
+                if (quantity < 50) {
+                    alert('A quantidade mínima para cartões de visita é 50.');
+                    return;
+                }
+                price = servicePrices.businessCard;
+                serviceName = `Cartão de Visita (${quantity} unidades)`;
+            } else if (service === 'desktopMaintenance' || service === 'laptopMaintenance') {
+                const option = document.getElementById(`${service}-option`).value;
+                price = servicePrices[service][option];
+                serviceName = `${service === 'desktopMaintenance' ? 'Manutenção de Desktop' : 'Manutenção de Notebook'} (${option})`;
+            } else {
+                price = servicePrices[service];
+                serviceName = service.replace(/([A-Z])/g, ' $1').trim();
+            }
+
+            if (!clientName || !clientCPF || !clientEmail || !clientPhone || !service) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            const ownerPhone = '5599982491147';
+            const clientPhoneFormatted = clientPhone.replace(/\D/g, '');
+
+            messageForOwner = `Novo Pedido:\n\nCliente: ${clientName}\nCPF: ${clientCPF}\nE-mail: ${clientEmail}\nTelefone: ${clientPhone}\nServiço: ${serviceName}\nValor: R$ ${price.toFixed(2)}\nData: ${formattedDate}\n\nInformações para pagamento via PIX:\nChave PIX (CPF): 00422582352\nBanco: Itaú\nTitular: Cleitor Medeiros Rodrigues`;
+            messageForClient = `Obrigado pelo seu pedido!\n\nServiço: ${serviceName}\nValor: R$ ${price.toFixed(2)}\nData: ${formattedDate}\n\nEntraremos em contato em breve.\n\nInformações para pagamento via PIX:\nChave PIX (CPF): 00422582352\nBanco: Itaú\nTitular: Cleitor Medeiros Rodrigues`;
+
+            const ownerWhatsAppUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(messageForOwner)}`;
+            const clientWhatsAppUrl = `https://wa.me/${clientPhoneFormatted}?text=${encodeURIComponent(messageForClient)}`;
+
+            // Abrir as URLs no WhatsApp
+            window.open(ownerWhatsAppUrl, '_blank');
+            window.open(clientWhatsAppUrl, '_blank');
+        }
+
+        function resetForm() {
+            document.getElementById('service-form').reset();
+            updateServiceDetails();
+        }
+
+        function newOrder() {
+            resetForm();
+        }
+
+        function showAboutUs() {
+            document.getElementById('about-us-modal').style.display = 'flex';
+        }
+
+        function closeAboutUs() {
+            document.getElementById('about-us-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
