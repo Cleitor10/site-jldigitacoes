@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços de Design e Formatações</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #004c54;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 80px auto 20px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #006d77;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset {
+            border: none;
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #eaeaea;
+            border-radius: 8px;
+        }
+
+        legend {
+            font-weight: 600;
+            font-size: 1.3em;
+            color: #006d77;
+            border-bottom: 2px solid #006d77;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0 4px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"], input[type="email"], select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+            margin-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, input[type="email"]:focus, select:focus {
+            border-color: #006d77;
+            outline: none;
+        }
+
+        button {
+            background-color: #006d77;
+            color: #ffffff;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #004c54;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .payment-info {
+            display: none;
+            font-size: 1em;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #d0f0c0;
+            border: 1px solid #b0e57c;
+            border-radius: 5px;
+            color: #004d40;
+        }
+
+        .payment-info.active {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #006d77;
+            color: #ffffff;
+            font-size: 0.9em;
+            border-top: 1px solid #004c54;
+            margin-top: auto;
+        }
+
+        .payment-info span {
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            button {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        JL Digitações
+    </div>
+
+    <div class="container">
+        <h1>Serviços de Design e Formatações</h1>
+        
+        <form id="service-form">
+            <!-- Formatação de Trabalhos Científicos e Acadêmicos -->
+            <fieldset>
+                <legend>Formatação de Trabalhos Científicos e Acadêmicos</legend>
+                <label for="deadline">Escolha o Prazo:</label>
+                <select id="deadline" onchange="showPaymentInfo()">
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="1.50" data-type="Padrão (até 72h)">Padrão (até 72h) - R$ 1,50 por página</option>
+                    <option value="2.00" data-type="Normal (até 48h)">Normal (até 48h) - R$ 2,00 por página</option>
+                    <option value="2.50" data-type="Diário (Até 24h)">Diário (Até 24h) - R$ 2,50 por página</option>
+                    <option value="3.50" data-type="Muito Rápido (Até 6h)">Muito Rápido (Até 6h) - R$ 3,50 por página</option>
+                    <option value="4.50" data-type="Expresso (Até 2h)">Expresso (Até 2h) - R$ 4,50 por página</option>
+                </select>
+                <label for="pages">Número de Páginas:</label>
+                <input type="number" id="pages" name="pages" min="1">
+                <p id="formatting-total">Total: R$ 0,00</p>
+            </fieldset>
+
+            <!-- Design -->
+            <fieldset>
+                <legend>Design</legend>
+                <label for="business-cards">Cartão de Visitas (mínimo 50 unidades):</label>
+                <input type="number" id="business-cards" name="business-cards" min="50">
+                <p id="cards-total">Total: R$ 0,00</p>
+
+                <label for="logo">Logomarca e Arte Digital:</label>
+                <input type="number" id="logo" name="logo" min="1" placeholder="Quantidade de artes base">
+                <p id="logo-total">Total: R$ 0,00</p>
+            </fieldset>
+
+            <!-- Manutenção de Computadores -->
+            <fieldset>
+                <legend>Manutenção de Computadores</legend>
+                <label for="desktop-backup">Formatação/Manutenção de Desktop:</label>
+                <select id="desktop-backup">
+                    <option value="">Selecione</option>
+                    <option value="50" data-type="Sem Backup">Sem Backup - R$ 50,00</option>
+                    <option value="70" data-type="Com Backup">Com Backup - R$ 70,00</option>
+                </select>
+
+                <label for="laptop-backup">Formatação/Manutenção de Notebook:</label>
+                <select id="laptop-backup">
+                    <option value="">Selecione</option>
+                    <option value="60" data-type="Sem Backup">Sem Backup - R$ 60,00</option>
+                    <option value="80" data-type="Com Backup">Com Backup - R$ 80,00</option>
+                </select>
+            </fieldset>
+
+            <!-- Outros Serviços -->
+            <fieldset>
+                <legend>Outros Serviços</legend>
+                <label for="program-update">Atualização/Instalação de Programas:</label>
+                <input type="checkbox" id="program-update" name="program-update" value="25">
+                <label for="office-install">Instalação do Pacote Office:</label>
+                <input type="checkbox" id="office-install" name="office-install" value="30">
+            </fieldset>
+
+            <!-- Dados do Cliente -->
+            <fieldset>
+                <legend>Dados do Cliente</legend>
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="address">Endereço:</label>
+                <input type="text" id="address" name="address" required>
+                <label for="phone">Número de Celular:</label>
+                <input type="text" id="phone" name="phone" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </fieldset>
+
+        <div id="payment-info" class="payment-info">
+            <p>Dados para Pagamento:
+	    <p>Chave PIX (CPF): 00422582352
+	    <p>Banco: ITAÚ
+	    <p>Titular: Cleitor Medeiros Rodrigues
+            <p>Entrada de 50%: R$ <span id="half-payment">0,00</span></p>
+        </div>
+
+            <button type="button" onclick="finalizeOrder()">Finalizar Pedido!</button>
+            <button type="button" onclick="resetForm()">Novo Pedido</button>
+        </form>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Cleitor Medeiros Rodrigues. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('deadline').addEventListener('change', calculateFormatting);
+        document.getElementById('pages').addEventListener('input', calculateFormatting);
+        document.getElementById('business-cards').addEventListener('input', calculateBusinessCards);
+        document.getElementById('logo').addEventListener('input', calculateLogo);
+        document.getElementById('desktop-backup').addEventListener('change', calculateTotal);
+        document.getElementById('laptop-backup').addEventListener('change', calculateTotal);
+        document.getElementById('program-update').addEventListener('change', calculateTotal);
+        document.getElementById('office-install').addEventListener('change', calculateTotal);
+
+        function calculateFormatting() {
+            const pages = document.getElementById('pages').value;
+            const price = parseFloat(document.getElementById('deadline').value) || 0;
+            const total = pages * price;
+            document.getElementById('formatting-total').textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+            calculateTotal();
+        }
+
+        function calculateBusinessCards() {
+            const quantity = document.getElementById('business-cards').value;
+            const total = (quantity / 50) * 60; // Preço base para 50 cartões
+            document.getElementById('cards-total').textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+            calculateTotal();
+        }
+
+        function calculateLogo() {
+            const quantity = document.getElementById('logo').value;
+            const total = quantity * 25; // Preço base para cada arte
+            document.getElementById('logo-total').textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const formattingTotal = parseFloat(document.getElementById('formatting-total').textContent.split('R$ ')[1].replace(',', '.')) || 0;
+            const cardsTotal = parseFloat(document.getElementById('cards-total').textContent.split('R$ ')[1].replace(',', '.')) || 0;
+            const logoTotal = parseFloat(document.getElementById('logo-total').textContent.split('R$ ')[1].replace(',', '.')) || 0;
+            const desktopTotal = parseFloat(document.getElementById('desktop-backup').value) || 0;
+            const laptopTotal = parseFloat(document.getElementById('laptop-backup').value) || 0;
+            const programUpdateTotal = document.getElementById('program-update').checked ? 25 : 0;
+            const officeInstallTotal = document.getElementById('office-install').checked ? 30 : 0;
+
+            const serviceTotal = formattingTotal + cardsTotal + logoTotal + desktopTotal + laptopTotal + programUpdateTotal + officeInstallTotal;
+            const halfPayment = (serviceTotal * 0.50).toFixed(2);
+
+            document.getElementById('half-payment').textContent = halfPayment.replace('.', ',');
+            document.getElementById('payment-info').classList.add('active');
+        }
+
+        function finalizeOrder() {
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+
+            if (!name || !address || !phone || !email) {
+                alert('Por favor, preencha todos os dados do cliente.');
+                return;
+            }
+
+            const deadline = document.getElementById('deadline').selectedOptions[0]?.textContent || '';
+            const pages = document.getElementById('pages').value;
+            const formattingTotal = document.getElementById('formatting-total').textContent.split('R$ ')[1] || '0,00';
+
+            const businessCardsQuantity = document.getElementById('business-cards').value;
+            const cardsTotal = document.getElementById('cards-total').textContent.split('R$ ')[1] || '0,00';
+
+            const logoQuantity = document.getElementById('logo').value;
+            const logoTotal = document.getElementById('logo-total').textContent.split('R$ ')[1] || '0,00';
+
+            const desktopTotal = document.getElementById('desktop-backup').value || '0,00';
+            const laptopTotal = document.getElementById('laptop-backup').value || '0,00';
+
+            const programUpdateTotal = document.getElementById('program-update').checked ? 25 : 0;
+            const officeInstallTotal = document.getElementById('office-install').checked ? 30 : 0;
+
+            const serviceTotal = [
+                parseFloat(formattingTotal.replace(',', '.')),
+                parseFloat(cardsTotal.replace(',', '.')),
+                parseFloat(logoTotal.replace(',', '.')),
+                parseFloat(desktopTotal.replace(',', '.')),
+                parseFloat(laptopTotal.replace(',', '.')),
+                programUpdateTotal,
+                officeInstallTotal
+            ].reduce((sum, current) => sum + current, 0);
+
+            const halfPayment = (serviceTotal * 0.50).toFixed(2);
+
+            let message = `*Pedido recebido:*\n\n*Nome:* ${name}\n*Telefone:* ${phone}\n*Email:* ${email}\n*Endereço:* ${address}\n*Data da Solicitação:* ${new Date().toLocaleDateString('pt-BR')}\n\n`;
+
+            if (deadline) {
+                message += `*Serviço Solicitado:* Formatação de Trabalhos Científicos e Acadêmicos - Prazo: ${deadline} - Total: R$ ${formattingTotal}\n`;
+            }
+            if (businessCardsQuantity >= 50) {
+                message += `*Serviço Solicitado:* Cartão de Visitas - Quantidade: ${businessCardsQuantity} - Total: R$ ${cardsTotal}\n`;
+            }
+            if (logoQuantity >= 1) {
+                message += `*Serviço Solicitado:* Logomarca e Arte Digital - Quantidade: ${logoQuantity} - Total: R$ ${logoTotal}\n`;
+            }
+            if (desktopTotal > 0) {
+                message += `*Serviço Solicitado:* Formatação/Manutenção de Desktop - Total: R$ ${desktopTotal}\n`;
+            }
+            if (laptopTotal > 0) {
+                message += `*Serviço Solicitado:* Formatação/Manutenção de Notebook - Total: R$ ${laptopTotal}\n`;
+            }
+            if (programUpdateTotal > 0) {
+                message += `*Serviço Solicitado:* Atualização/Instalação de Programas - Total: R$ ${programUpdateTotal}\n`;
+            }
+            if (officeInstallTotal > 0) {
+                message += `*Serviço Solicitado:* Instalação do Pacote Office - Total: R$ ${officeInstallTotal}\n`;
+            }
+
+            message += `\n*Valor Total do Serviço:* R$ ${serviceTotal.toFixed(2).replace('.', ',')}\n*Entrada de 50%:* R$ ${halfPayment.replace('.', ',')}\n`;
+
+            const url = `https://wa.me/5599982491147?text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function resetForm() {
+            document.getElementById('service-form').reset();
+            document.getElementById('formatting-total').textContent = 'Total: R$ 0,00';
+            document.getElementById('cards-total').textContent = 'Total: R$ 0,00';
+            document.getElementById('logo-total').textContent = 'Total: R$ 0,00';
+            document.getElementById('payment-info').classList.remove('active');
+        }
+
+        function showPaymentInfo() {
+            calculateTotal();
+        }
+    </script>
+</body>
+</html>
